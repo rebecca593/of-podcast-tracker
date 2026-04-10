@@ -848,10 +848,10 @@ function setSyncStatus(status) {
 }
 
 async function loadState() {
-  // Seed defaults first so UI renders immediately
-  const en = new Set(state.podcasts.map(p => p.name));
-  DEFAULT_PODCASTS.forEach(p => { if (!en.has(p.name)) state.podcasts.push(p); });
-  state.podcasts = state.podcasts.filter((p,i,a) => a.findIndex(x=>x.name===p.name)===i);
+  // Always seed defaults first so table is never empty
+  DEFAULT_PODCASTS.forEach(p => {
+    if (!state.podcasts.find(x => x.name === p.name)) state.podcasts.push(p);
+  });
   state.podcasts.forEach(p => {
     if (!state.pitchState[p.name]) state.pitchState[p.name] = {
       status: p.initialStatus || 'not_pitched',
@@ -860,21 +860,21 @@ async function loadState() {
   });
 
   setSyncStatus('loading');
-  renderTable();
+  renderTable(); // Show defaults immediately
 
   try {
     const res = await fetch(`${SCRIPT_URL}?action=read&t=${Date.now()}`);
     const text = await res.text();
     const remote = JSON.parse(text);
-    if (remote && remote.pitchState) {
-      // Merge: remote pitchState wins, but keep any podcasts added locally that aren't remote
-      state.pitchState = remote.pitchState;
-      if (remote.podcasts && remote.podcasts.length) {
-        // Merge remote podcasts on top of defaults (remote additions win)
+    if (remote && remote.pitchState && Object.keys(remote.pitchState).length > 0) {
+      // Merge remote pitchState over defaults
+      state.pitchState = Object.assign({}, state.pitchState, remote.pitchState);
+      // Only replace podcasts list if remote has podcasts
+      if (remote.podcasts && remote.podcasts.length > 0) {
+        // Keep any default podcasts not in remote (in case new ones were added to code)
         const remoteNames = new Set(remote.podcasts.map(p => p.name));
-        const defaultsNotInRemote = state.podcasts.filter(p => !remoteNames.has(p.name));
-        state.podcasts = [...remote.podcasts, ...defaultsNotInRemote];
-        // Re-init pitchState for any podcasts missing it
+        const newDefaults = state.podcasts.filter(p => !remoteNames.has(p.name));
+        state.podcasts = [...remote.podcasts, ...newDefaults];
         state.podcasts.forEach(p => {
           if (!state.pitchState[p.name]) state.pitchState[p.name] = {
             status: p.initialStatus || 'not_pitched',
@@ -882,8 +882,12 @@ async function loadState() {
           };
         });
       }
+      setSyncStatus('saved');
+    } else {
+      // Nothing in Sheet yet — save defaults up to Sheet now
+      setSyncStatus('saved');
+      saveState();
     }
-    setSyncStatus('saved');
   } catch(e) {
     console.warn('Could not load from Sheets, using defaults.', e);
     setSyncStatus('error');
@@ -1012,7 +1016,7 @@ function addPodcast(){ const name=document.getElementById('add-name').value.trim
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeModalDirect();closeAddModalDirect();} });
 
-loadState().then(() => renderTable());
+loadState();
 </script>
 </body>
 </html>
