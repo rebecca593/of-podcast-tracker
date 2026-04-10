@@ -706,17 +706,17 @@
       <div class="tab-content active" id="tab-pitch">
         <div id="noPitchNote" class="info-banner purple" style="display:none">⚠️ This podcast typically doesn't accept pitches. Keep it on the radar to manifest!</div>
         <div id="bookedBanner" class="info-banner green" style="display:none">🎉 Booked! Great work.</div>
-        <div class="subject-line" id="pitchSubject"></div>
+        <div class="subject-line"><strong>Subject:</strong> <span id="pitchSubject" contenteditable="true" spellcheck="false" style="outline:none;"></span></div>
         <div class="email-box" id="pitchBody" contenteditable="true" spellcheck="false"></div>
       </div>
       <div class="tab-content" id="tab-followup1">
         <div class="info-banner amber">⏰ Send 5–7 days after original pitch if no reply.</div>
-        <div class="subject-line" id="fu1Subject"></div>
+        <div class="subject-line"><strong>Subject:</strong> <span id="fu1Subject" contenteditable="true" spellcheck="false" style="outline:none;"></span></div>
         <div class="email-box" id="fu1Body" contenteditable="true" spellcheck="false"></div>
       </div>
       <div class="tab-content" id="tab-followup2">
         <div class="info-banner amber">⏰ Send ~7 days after Follow-Up #1 if still no reply.</div>
-        <div class="subject-line" id="fu2Subject"></div>
+        <div class="subject-line"><strong>Subject:</strong> <span id="fu2Subject" contenteditable="true" spellcheck="false" style="outline:none;"></span></div>
         <div class="email-box" id="fu2Body" contenteditable="true" spellcheck="false"></div>
       </div>
       <div class="tab-content" id="tab-details">
@@ -737,7 +737,8 @@
       </div>
       <div style="display:flex;gap:8px;">
         <button class="btn-copy" onclick="copyActiveEmail()">Copy Email</button>
-        <button class="btn-save" onclick="saveNotes()">Save Notes</button>
+        <button class="btn-save" onclick="saveEmail()">Save Email</button>
+        <button class="btn-save" onclick="saveNotes()" style="background:var(--gray-dark)">Save Notes</button>
       </div>
     </div>
   </div>
@@ -783,7 +784,7 @@ const PITCH_EMAILS = {
   "Women in the Middle": { subject: "Guest Idea: Reinventing Yourself After 40", body: `Hi Suzy,\n\nI'm reaching out with a guest idea that I think would resonate with your audience, especially around midlife transitions and rediscovering yourself.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app designed to simplify getting dressed and build confidence in everyday life.\n\nShe started her blog at 40 and has since built a community of over 1 million women across social platforms, many of whom are navigating midlife changes.\n\nA few angles that could be a strong fit:\n• Reinventing your identity and confidence after 40\n• Why getting dressed becomes more challenging in midlife\n• Letting go of old rules and embracing the life you have now\n\nListeners walk away with practical, relatable takeaways they can apply right away.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nHappy to share more if helpful.\n\nBest,\n[Name]` },
   "Edit Your Life": { subject: "Guest Idea: Simplifying One Daily Decision", body: `Hi Christine,\n\nI'm reaching out with a guest idea that I think would resonate with your audience, especially around simplifying daily routines and reducing mental clutter.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app built to remove the daily decision of what to wear.\n\nShe started her blog at 40 and has since built a community of over 1 million women across social platforms, helping them simplify their routines and feel more confident day to day.\n\nA few angles that could be a strong fit:\n• Simplifying your morning routine by removing one decision\n• Reducing mental clutter through small, practical systems\n• How getting dressed impacts your day more than you think\n\nListeners walk away with simple, actionable ideas that make everyday life feel easier.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nWould love to connect if this feels aligned.\n\nBest,\n[Name]` },
   "The Simple Sophisticate": { subject: "Guest Idea: A Wardrobe System for Intentional Living", body: `Hi Shannon,\n\nI'm reaching out with a guest idea that I think would resonate with your audience, especially around intentional living and thoughtful style.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app built to help women simplify their closets and feel confident using what they already own.\n\nShe started her blog at 40 and has since built a community of over 1 million women across social platforms who value simplicity, quality, and living with intention.\n\nA few angles that could be a strong fit:\n• Creating a wardrobe that reflects your real life, not trends\n• How a system brings ease and confidence to getting dressed\n• Moving from impulse shopping to intentional choices\n\nListeners walk away with practical ways to simplify and feel more at ease in their daily lives.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nHappy to share more if helpful.\n\nBest,\n[Name]` },
-  "Brilliant Balance": { subject: "Guest Idea: Confidence Starts Before the Workday", body: `Hi Cherylanne,\n\nI'm reaching out with a guest idea that I think would resonate with your audience, especially around building confidence and managing competing priorities.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app built to remove the daily decision of what to wear.\n\nShe started her blog at 40 and has since built a community of over 1 million women across social platforms, helping them feel more confident and less overwhelmed in their daily lives.\n\nA few angles that could be a strong fit:\n• How clothing confidence impacts leadership and presence\n• Reducing decision fatigue to create more mental space\n• Building simple routines that support confidence every day\n\nListeners walk away with practical ideas they can apply immediately in both work and life.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nWould love to connect if this feels like a fit.\n\nBest,\n[Name]` }
+  "Boss Mom Podcast": { subject: "Guest Idea: The Mental Load Moms Carry Every Day", body: `Hi Dana and Boss Mom Team,\n\nI'm reaching out with a guest idea that I think would really resonate with your audience, especially around the mental load moms carry every day.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app built to remove the daily decision of what to wear.\n\nShe's also a mom who knows firsthand how quickly mornings can feel overwhelming, and how even small decisions like getting dressed can add to that mental load.\n\nAlison started her blog at 40 and has since built a community of over 1 million women across social platforms, eventually turning that into a tech platform that helps thousands of women simplify getting dressed and feel more confident in their daily lives.\n\nA few angles that could be a strong fit:\n• The invisible mental load moms carry before the day even starts\n• How removing one small decision can make mornings feel calmer\n• Building confidence in the middle of busy, real-life motherhood\n\nListeners walk away with practical ideas they can apply immediately, especially around simplifying routines and creating more ease in their day.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nHappy to send more details or tailor this to your current themes.\n\nBest,\n[Name]` },\n\nI'm reaching out with a guest idea that I think would resonate with your audience, especially around building confidence and managing competing priorities.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app built to remove the daily decision of what to wear.\n\nShe started her blog at 40 and has since built a community of over 1 million women across social platforms, helping them feel more confident and less overwhelmed in their daily lives.\n\nA few angles that could be a strong fit:\n• How clothing confidence impacts leadership and presence\n• Reducing decision fatigue to create more mental space\n• Building simple routines that support confidence every day\n\nListeners walk away with practical ideas they can apply immediately in both work and life.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nWould love to connect if this feels like a fit.\n\nBest,\n[Name]` }
 };
 
 const GP = (fn,angle,a1,a2,a3) => `Hi ${fn},\n\nI'm reaching out with a guest idea that I think would resonate with your audience, especially around ${angle}.\n\nAlison Lumbatis is the founder of Outfit Formulas, a wardrobe planning app built to remove the daily decision of what to wear.\n\nShe started her blog at 40 and has since built a community of over 1 million women across social platforms, eventually turning that into a tech platform that helps thousands of women simplify getting dressed and feel more confident in their daily lives.\n\nA few angles that could be a strong fit:\n• ${a1}\n• ${a2}\n• ${a3}\n\nListeners walk away with practical ideas they can apply immediately, especially around simplifying routines and reducing mental load.\n\nAlison also shares podcast appearances with her audience to help amplify the conversation.\n\nHappy to send more details or tailor this to your current themes.\n\nBest,\n[Name]`;
@@ -862,7 +863,7 @@ async function loadState() {
   renderTable();
 
   try {
-    const res = await fetch(`${SCRIPT_URL}?action=read`);
+    const res = await fetch(`${SCRIPT_URL}?action=read&t=${Date.now()}`);
     const text = await res.text();
     const remote = JSON.parse(text);
     if (remote && remote.pitchState) {
@@ -891,15 +892,15 @@ async function loadState() {
 }
 
 function saveState() {
-  // Debounce: wait 800ms after last change before writing
   clearTimeout(saveTimer);
   setSyncStatus('saving');
   saveTimer = setTimeout(async () => {
     try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify({ pitchState: state.pitchState, podcasts: state.podcasts }),
-      });
+      const payload = JSON.stringify({ pitchState: state.pitchState, podcasts: state.podcasts });
+      // Use no-cors + form encoding to avoid CORS issues with Apps Script
+      const form = new FormData();
+      form.append('payload', payload);
+      await fetch(SCRIPT_URL, { method: 'POST', body: form, mode: 'no-cors' });
       setSyncStatus('saved');
     } catch(e) {
       console.error('Save failed', e);
@@ -957,15 +958,15 @@ function openModal(name){
   const email=getPitchEmail(currentPodcast);
   document.getElementById('modalTitle').textContent=currentPodcast.name;
   document.getElementById('modalSubtitle').textContent=`${currentPodcast.host} · ${currentPodcast.category||''}`;
-  document.getElementById('pitchSubject').innerHTML=`<strong>Subject:</strong> ${esc(email.subject)}`;
+  document.getElementById('pitchSubject').textContent = ps.pitchSubject || email.subject;
   document.getElementById('noPitchNote').style.display=currentPodcast.noPitches?'flex':'none';
   document.getElementById('bookedBanner').style.display=ps.status==='booked'?'flex':'none';
-  document.getElementById('pitchBody').textContent=email.body;
-  const re=`Re: ${email.subject}`;
-  document.getElementById('fu1Subject').innerHTML=`<strong>Subject:</strong> ${esc(re)}`;
-  document.getElementById('fu1Body').textContent=FU1(currentPodcast.firstName||'there',(currentPodcast.angle||'').toLowerCase());
-  document.getElementById('fu2Subject').innerHTML=`<strong>Subject:</strong> ${esc(re)}`;
-  document.getElementById('fu2Body').textContent=FU2(currentPodcast.firstName||'there');
+  document.getElementById('pitchBody').textContent = ps.pitchBody || email.body;
+  const re = `Re: ${ps.pitchSubject || email.subject}`;
+  document.getElementById('fu1Subject').textContent = ps.fu1Subject || re;
+  document.getElementById('fu1Body').textContent = ps.fu1Body || FU1(currentPodcast.firstName||'there',(currentPodcast.angle||'').toLowerCase());
+  document.getElementById('fu2Subject').textContent = ps.fu2Subject || re;
+  document.getElementById('fu2Body').textContent = ps.fu2Body || FU2(currentPodcast.firstName||'there');
   document.getElementById('detailsContent').innerHTML=`<div class="details-grid"><div class="detail-item"><label>Host</label><div class="val">${esc(currentPodcast.host||'—')}</div></div><div class="detail-item"><label>Category</label><div class="val">${esc(currentPodcast.category||'—')}</div></div><div class="detail-item"><label>Audience Fit</label><div class="val">${esc(currentPodcast.audience||'—')}</div></div><div class="detail-item"><label>Social Following</label><div class="val">${esc(currentPodcast.social||'—')}</div></div><div class="detail-item full"><label>Contact</label><div class="val">${currentPodcast.contact?`<a href="${currentPodcast.contact.includes('@')?'mailto:'+currentPodcast.contact:currentPodcast.contact}" target="_blank" rel="noopener">${esc(currentPodcast.contact)}</a>`:'—'}</div></div>${currentPodcast.description?`<div class="detail-item full"><label>About</label><div class="val" style="color:var(--gray-mid);font-size:12px;line-height:1.6">${esc(currentPodcast.description)}</div></div>`:''}</div><label class="field-label">Notes</label><textarea class="notes-input" id="modalNotes" placeholder="Add your notes here…">${esc(ps.notes||'')}</textarea>`;
   document.getElementById('statusSelect').value=ps.status||'not_pitched';
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -982,7 +983,26 @@ function closeModalDirect(){ document.getElementById('overlay').classList.remove
 function switchTab(tab,btn){ currentTab=tab; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); if(btn) btn.classList.add('active'); document.getElementById('tab-'+tab).classList.add('active'); }
 function updateStatusFromModal(){ if(!currentPodcast) return; const v=document.getElementById('statusSelect').value; state.pitchState[currentPodcast.name]=state.pitchState[currentPodcast.name]||{}; state.pitchState[currentPodcast.name].status=v; document.getElementById('bookedBanner').style.display=v==='booked'?'flex':'none'; saveState(); renderTable(); }
 function saveNotes(){ if(!currentPodcast) return; const notes=document.getElementById('modalNotes')?.value||''; state.pitchState[currentPodcast.name]=state.pitchState[currentPodcast.name]||{}; state.pitchState[currentPodcast.name].notes=notes; saveState(); renderTable(); showHint('✓ Saved!'); }
-function copyActiveEmail(){ const ids={pitch:['pitchSubject','pitchBody'],followup1:['fu1Subject','fu1Body'],followup2:['fu2Subject','fu2Body']}; const pair=ids[currentTab]; if(!pair) return; const text=document.getElementById(pair[0]).textContent+'\n\n'+(document.getElementById(pair[1]).innerText||document.getElementById(pair[1]).textContent); navigator.clipboard.writeText(text).then(()=>showHint('✓ Copied!')); }
+function copyActiveEmail(){
+  const ids={pitch:['pitchSubject','pitchBody'],followup1:['fu1Subject','fu1Body'],followup2:['fu2Subject','fu2Body']};
+  const pair=ids[currentTab]; if(!pair) return;
+  const subject=document.getElementById(pair[0]).textContent;
+  const body=document.getElementById(pair[1]).innerText||document.getElementById(pair[1]).textContent;
+  navigator.clipboard.writeText('Subject: '+subject+'\n\n'+body).then(()=>showHint('✓ Copied!'));
+}
+
+function saveEmail(){
+  if(!currentPodcast) return;
+  const ps = state.pitchState[currentPodcast.name] = state.pitchState[currentPodcast.name]||{};
+  ps.pitchSubject = document.getElementById('pitchSubject').textContent;
+  ps.pitchBody    = document.getElementById('pitchBody').innerText||document.getElementById('pitchBody').textContent;
+  ps.fu1Subject   = document.getElementById('fu1Subject').textContent;
+  ps.fu1Body      = document.getElementById('fu1Body').innerText||document.getElementById('fu1Body').textContent;
+  ps.fu2Subject   = document.getElementById('fu2Subject').textContent;
+  ps.fu2Body      = document.getElementById('fu2Body').innerText||document.getElementById('fu2Body').textContent;
+  saveState();
+  showHint('✓ Email saved!');
+}
 function showHint(msg){ const h=document.getElementById('copyHint'); h.textContent=msg; h.classList.add('show'); setTimeout(()=>h.classList.remove('show'),2200); }
 
 function openAddModal(){ ['add-name','add-host','add-firstName','add-category','add-audience','add-angle','add-contact','add-social','add-notes'].forEach(id=>{document.getElementById(id).value='';}); document.getElementById('addOverlay').classList.add('open'); document.body.style.overflow='hidden'; setTimeout(()=>document.getElementById('add-name').focus(),100); }
