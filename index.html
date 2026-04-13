@@ -632,6 +632,9 @@
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Add Podcast
       </button>
+      <button class="btn-add" onclick="syncPodcastsFromCode()" style="background:var(--gray-dark);font-size:10px;">
+        \u21BB Sync Podcasts
+      </button>
     </div>
     <div id="syncStatus" style="display:none;align-items:center;gap:6px;margin-top:10px;">
       <span id="syncDot" style="width:7px;height:7px;border-radius:50%;background:#aaa;display:inline-block;flex-shrink:0;"></span>
@@ -1010,7 +1013,27 @@ function saveEmail(){
 }
 function showHint(msg){ const h=document.getElementById('copyHint'); h.textContent=msg; h.classList.add('show'); setTimeout(()=>h.classList.remove('show'),2200); }
 
-function openAddModal(){ ['add-name','add-host','add-firstName','add-category','add-audience','add-angle','add-contact','add-social','add-notes'].forEach(id=>{document.getElementById(id).value='';}); document.getElementById('addOverlay').classList.add('open'); document.body.style.overflow='hidden'; setTimeout(()=>document.getElementById('add-name').focus(),100); }
+function syncPodcastsFromCode() {
+  if (!confirm('This will update all podcast details (links, angles, etc.) from the latest code, while keeping your statuses and notes. Continue?')) return;
+  // Re-merge DEFAULT_PODCASTS into state, updating existing entries with fresh data
+  DEFAULT_PODCASTS.forEach(p => {
+    const existing = state.podcasts.findIndex(x => x.name === p.name);
+    if (existing >= 0) {
+      // Update podcast details but preserve any custom fields added via Add Podcast
+      state.podcasts[existing] = Object.assign({}, p, {
+        // Keep any extra fields that were added manually
+      });
+    } else {
+      state.podcasts.push(p);
+    }
+  });
+  saveState();
+  renderTable();
+  setSyncStatus('saved');
+  alert('Done! Podcast details synced from code. Statuses and notes are unchanged.');
+}
+
+ ['add-name','add-host','add-firstName','add-category','add-audience','add-angle','add-contact','add-social','add-notes'].forEach(id=>{document.getElementById(id).value='';}); document.getElementById('addOverlay').classList.add('open'); document.body.style.overflow='hidden'; setTimeout(()=>document.getElementById('add-name').focus(),100); }
 function closeAddModal(e){ if(e.target===document.getElementById('addOverlay')) closeAddModalDirect(); }
 function closeAddModalDirect(){ document.getElementById('addOverlay').classList.remove('open'); document.body.style.overflow=''; }
 function addPodcast(){ const name=document.getElementById('add-name').value.trim(); const host=document.getElementById('add-host').value.trim(); if(!name||!host){alert('Podcast name and host are required.');return;} if(state.podcasts.find(p=>p.name===name)){alert('A podcast with this name already exists.');return;} const newPod={name,host,firstName:document.getElementById('add-firstName').value.trim()||host.split(' ')[0],category:document.getElementById('add-category').value.trim()||'Other',audience:document.getElementById('add-audience').value.trim()||'',angle:document.getElementById('add-angle').value.trim()||'',contact:document.getElementById('add-contact').value.trim()||'',social:document.getElementById('add-social').value.trim()||''}; const notes=document.getElementById('add-notes').value.trim(); state.podcasts.push(newPod); state.pitchState[name]={status:'not_pitched',notes}; saveState(); renderTable(); closeAddModalDirect(); }
