@@ -633,7 +633,7 @@
         Add Podcast
       </button>
       <button class="btn-add" onclick="syncPodcastsFromCode()" style="background:var(--gray-dark);font-size:10px;">
-        \u21BB Sync Podcasts
+        &#x21BB; Sync Podcasts
       </button>
     </div>
     <div id="syncStatus" style="display:none;align-items:center;gap:6px;margin-top:10px;">
@@ -1014,7 +1014,6 @@ function saveEmail(){
 function showHint(msg){ const h=document.getElementById('copyHint'); h.textContent=msg; h.classList.add('show'); setTimeout(()=>h.classList.remove('show'),2200); }
 
 function syncPodcastsFromCode() {
-  if (!confirm('This will update all podcast details (links, angles, etc.) from the latest code, while keeping your statuses and notes. Continue?')) return;
   DEFAULT_PODCASTS.forEach(p => {
     const existing = state.podcasts.findIndex(x => x.name === p.name);
     if (existing >= 0) {
@@ -1025,8 +1024,7 @@ function syncPodcastsFromCode() {
   });
   saveState();
   renderTable();
-  setSyncStatus('saved');
-  alert('Done! Podcast details synced. Statuses and notes are unchanged.');
+  showHint('\u2713 Synced!');
 }
 
 function openAddModal(){ ['add-name','add-host','add-firstName','add-category','add-audience','add-angle','add-contact','add-social','add-notes'].forEach(id=>{document.getElementById(id).value='';}); document.getElementById('addOverlay').classList.add('open'); document.body.style.overflow='hidden'; setTimeout(()=>document.getElementById('add-name').focus(),100); }
